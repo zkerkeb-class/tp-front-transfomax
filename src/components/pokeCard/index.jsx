@@ -13,9 +13,13 @@ const PokeCard = ({ pokemon }) => {
     //     return <p>Chargement du Pokémon...</p>;
     // }
 
+    const rawStats = pokemon.base || {};
+    const statsArray = Object.entries(rawStats);
+    console.log("Mon tableau prêt à être mappé :", statsArray);
+
 
     return (
-        // <Link to={`/pokemonDetails/${encodeURIComponent(pokemon.url)}`}>
+        <Link to={`/pokemonDetails/${encodeURIComponent(pokemon.name.french)}`}>
         <div className="poke-card">
             <div className={`poke-card-header poke-type-${pokemon.type?.[0]}`}>
                 <PokeTitle name={pokemon.name.french} />
@@ -25,19 +29,22 @@ const PokeCard = ({ pokemon }) => {
             </div>
             <div>
 
-                {/* {pokemon.base?.map((stat) => {
-                    return(
-                        <div className="poke-stat-row" key={stat.stat.name}>
-                            <span className={`poke-type-font poke-type-${stat.stat.name}`}>{stat.stat.name}</span>
+                {statsArray.map((stat) => {
+                    const statName = stat[0];
+                    const statValue = stat[1];
+                    console.log(`Stat: ${statName}, Value: ${statValue}`);
 
-                            <span className="poke-type-font poke-stat-value">{stat.base_stat}</span>
+                    return(
+                        <div className="poke-stat-row" key={statName}>
+                            <span className={`poke-type-font poke-type-${statName}`}>{statName}</span>
+                            <span className="poke-type-font poke-stat-value">{statValue}</span>
                         </div>
                     ) 
-                })}     */}
+                })}    
 
             </div>
         </div>
-        // </Link>
+        </Link>
     );
 }
 
