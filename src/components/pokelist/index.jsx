@@ -8,11 +8,11 @@ const PokeList = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("https://pokeapi.co/api/v2/pokemon?limit=30")
+        fetch("http://localhost:3000/pokemons")
             .then((response) => response.json())
             .then((data) => {
                 console.log("Données reçues:", data);
-                setPokemons(data.results);
+                setPokemons(data);
                 setLoading(false);
             })
             .catch((error) => {
