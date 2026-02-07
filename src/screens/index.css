@@ -1,14 +1,11 @@
 .poke-card{
-    background-image: var(--bg-image);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
+    /* background-color: red; */
+    /* background-color: #7B4B94; */
     border-radius: 4px;
     display:flex;
     flex-direction: column;
-    width: 244px;
-    min-height: 341px;
+    width: 200px;
+    min-height: 250px;
     cursor: pointer;
 }
 

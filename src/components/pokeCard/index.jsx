@@ -7,32 +7,37 @@ import PokeTitle from "./pokeTitle";
 import PokeImage from "./pokeImage";
 
 const PokeCard = ({ pokemon }) => {
-    const {pokemonData, loading} = usePokemon(pokemon.url);
-    console.log('pokeData',pokemonData)
+    console.log('pokemon prop', pokemon);
 
+    // if (loading) {
+    //     return <p>Chargement du Pokémon...</p>;
+    // }
 
-    if (loading) {
-        return <p>Chargement du Pokémon...</p>;
-    }
+    const rawStats = pokemon.base || {};
+    const statsArray = Object.entries(rawStats);
+    console.log("Mon tableau prêt à être mappé :", statsArray);
 
 
     return (
-        <Link to={`/pokemonDetails/${encodeURIComponent(pokemon.url)}`}>
-        <div className="poke-card">
-            <div className={`poke-card-header poke-type-${pokemonData.types?.[0]?.type?.name}`}>
-                <PokeTitle name={pokemon.name} />
-            </div>
-            <div className="poke-image-background">
-                <PokeImage imageUrl={pokemonData.sprites?.other?.['official-artwork']?.front_default} />
-            </div>
+        <Link to={`/pokemonDetails/${encodeURIComponent(pokemon.name.french)}`}>
+        <div className="poke-card" style={{ '--bg-image': `url(${pokemon.image})` }}>
+            {/* <div className={`poke-card-header poke-type-${pokemon.type?.[0]}`}>
+                <PokeTitle name={pokemon.name.french} />
+            </div> */}
+            {/* <div className="poke-image-background">
+                <PokeImage imageUrl={pokemon.image} />
+            </div> */}
             <div>
 
-                {pokemonData.stats?.map((stat) => {
-                    return(
-                        <div className="poke-stat-row" key={stat.stat.name}>
-                            <span className={`poke-type-font poke-type-${stat.stat.name}`}>{stat.stat.name}</span>
+                {statsArray.map((stat) => {
+                    const statName = stat[0];
+                    const statValue = stat[1];
+                    console.log(`Stat: ${statName}, Value: ${statValue}`);
 
-                            <span className="poke-type-font poke-stat-value">{stat.base_stat}</span>
+                    return(
+                        <div className="poke-stat-row" key={statName}>
+                            <span className={`poke-type-font poke-type-${statName}`}>{statName}</span>
+                            <span className="poke-type-font poke-stat-value">{statValue}</span>
                         </div>
                     ) 
                 })}    
