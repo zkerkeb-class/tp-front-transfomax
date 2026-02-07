@@ -20,13 +20,13 @@ const PokeCard = ({ pokemon }) => {
 
     return (
         <Link to={`/pokemonDetails/${encodeURIComponent(pokemon.name.french)}`}>
-        <div className="poke-card">
-            <div className={`poke-card-header poke-type-${pokemon.type?.[0]}`}>
+        <div className="poke-card" style={{ '--bg-image': `url(${pokemon.image})` }}>
+            {/* <div className={`poke-card-header poke-type-${pokemon.type?.[0]}`}>
                 <PokeTitle name={pokemon.name.french} />
-            </div>
-            <div className="poke-image-background">
+            </div> */}
+            {/* <div className="poke-image-background">
                 <PokeImage imageUrl={pokemon.image} />
-            </div>
+            </div> */}
             <div>
 
                 {statsArray.map((stat) => {
