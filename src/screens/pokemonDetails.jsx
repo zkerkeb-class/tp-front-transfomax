@@ -1,6 +1,7 @@
 import {Link, useParams, useLocation, useNavigate} from 'react-router';
 import { useState, useEffect } from "react";
 import usePokemon from '../hook/usePokemon';
+import './index.css';
 
 
 
@@ -107,74 +108,113 @@ const PokemonDetails = () => {
 
 
     if (loading) {
-        return <p>Chargement des détails du Pokémon...</p>;
+        return (
+            <div className="loading-details">
+                <div className="loading-spinner"></div>
+                <p>Chargement des détails du Pokémon...</p>
+            </div>
+        );
     }
     
     return (
-        <div style={{ padding: '20px' }}>
-            <h1>
-                {isEditing ? "Mode Édition" : `Détails de ${pokemon.name.french}`}
-            </h1>
+        <div className="pokemon-details-page">
+            <div className={`pokemon-details-header ${isEditing ? 'editing' : ''}`}>
+                <h1>
+                    {isEditing ? "Mode Édition" : pokemon.name.french}
+                </h1>
+                
+                {pokemon.type && (
+                    <div className="pokemon-types">
+                        {pokemon.type.map((type, index) => (
+                            <span key={index} className={`type-badge ${type}`}>{type}</span>
+                        ))}
+                    </div>
+                )}
+            </div>
             
-            <img src={pokemon.image} alt={pokemon.name.french} width="150" />
+            <div className="pokemon-image-container">
+                <img 
+                    src={pokemon.image} 
+                    alt={pokemon.name.french} 
+                    className="pokemon-details-image"
+                />
+            </div>
 
-            <h2>Stats de base</h2>
-            
-            {isEditing ? (
-                // --- VUE FORMULAIRE (Inputs) ---
-                <div className="edit-form">
-                    {['HP', 'Attack', 'Defense', 'SpecialAttack', 'SpecialDefense', 'Speed'].map(statName => (
-                        <div key={statName} style={{ marginBottom: '5px' }}>
-                            <label style={{ display: 'inline-block', width: '120px' }}>{statName}: </label>
-                            <input 
-                                type="number"
-                                name={statName}
-                                value={formData.base?.[statName] || 0}
-                                onChange={handleStatChange}
-                            />
+            <div className="pokemon-stats-section">
+                <h2>Stats de base</h2>
+                
+                {isEditing ? (
+                    <div className="edit-form">
+                        {['HP', 'Attack', 'Defense', 'SpecialAttack', 'SpecialDefense', 'Speed'].map(statName => (
+                            <div key={statName} className="edit-form-group">
+                                <label>{statName}</label>
+                                <input 
+                                    type="number"
+                                    name={statName}
+                                    value={formData.base?.[statName] || 0}
+                                    onChange={handleStatChange}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="stats-list">
+                        <div className="stat-item">
+                            <span className="stat-name">HP</span>
+                            <span className="stat-value">{pokemon.base?.HP}</span>
                         </div>
-                    ))}
-                    
-                    <div style={{ marginTop: '15px' }}>
-                        <button onClick={updatePokemon} style={{ backgroundColor: 'green', color: 'white', marginRight: '10px' }}>
+                        <div className="stat-item">
+                            <span className="stat-name">Attack</span>
+                            <span className="stat-value">{pokemon.base?.Attack}</span>
+                        </div>
+                        <div className="stat-item">
+                            <span className="stat-name">Defense</span>
+                            <span className="stat-value">{pokemon.base?.Defense}</span>
+                        </div>
+                        <div className="stat-item">
+                            <span className="stat-name">Sp. Atk</span>
+                            <span className="stat-value">{pokemon.base?.SpecialAttack}</span>
+                        </div>
+                        <div className="stat-item">
+                            <span className="stat-name">Sp. Def</span>
+                            <span className="stat-value">{pokemon.base?.SpecialDefense}</span>
+                        </div>
+                        <div className="stat-item">
+                            <span className="stat-name">Speed</span>
+                            <span className="stat-value">{pokemon.base?.Speed}</span>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            <div className="pokemon-actions">
+                {isEditing ? (
+                    <>
+                        <button onClick={updatePokemon} className="btn-save">
                             Sauvegarder
                         </button>
-                        <button onClick={() => setIsEditing(false)}>
+                        <button onClick={() => setIsEditing(false)} className="btn-cancel">
                             Annuler
                         </button>
-                    </div>
-                </div>
-            ) : (
-                // --- VUE NORMALE (Texte) ---
-                <div>
-                    <ul>
-                        <li>HP: {pokemon.base?.HP}</li>
-                        <li>Attack: {pokemon.base?.Attack}</li>
-                        <li>Defense: {pokemon.base?.Defense}</li>
-                        <li>Sp. Atk: {pokemon.base?.SpecialAttack}</li>
-                        <li>Sp. Def: {pokemon.base?.SpecialDefense}</li>
-                        <li>Speed: {pokemon.base?.Speed}</li>
-                    </ul>
-
-                    <button onClick={() => setIsEditing(true)} style={{ marginBottom: '20px' }}>
-                        Modifier les stats
-                    </button>
-                </div>
-            )}
-
-            <hr />
-
-            <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-                <Link to="/">Retour liste</Link>
-                
-                {/* On cache le bouton supprimer si on est en train d'éditer */}
-                {!isEditing && (
-                    <button 
-                        onClick={() => deletePokemon(pokemon.name.french)}
-                        style={{ backgroundColor: 'red', color: 'white' }}
-                    >
-                        Supprimer
-                    </button>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/" className="btn-back">
+                            ← Retour à la liste
+                        </Link>
+                        <button onClick={() => {
+                            setFormData({ base: { ...pokemon.base } });
+                            setIsEditing(true);
+                        }} className="btn-edit">
+                            Modifier les stats
+                        </button>
+                        <button 
+                            onClick={() => deletePokemon(pokemon.name.french)}
+                            className="btn-delete"
+                        >
+                            Supprimer
+                        </button>
+                    </>
                 )}
             </div>
         </div>

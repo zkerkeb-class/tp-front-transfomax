@@ -102,7 +102,7 @@ const PokeList = () => {
         <div className="poke-list-container">
             <h2>Pokedex</h2>
 
-            <div className="pagination-controls" style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
+            <div className="pagination-controls">
                 <button onClick={handlePrev} disabled={page === 1}>
                     Précédent
                 </button>
@@ -116,44 +116,47 @@ const PokeList = () => {
 
             <button 
                 onClick={() => setIsFormOpen(!isFormOpen)}
-                style={{ width: '100%', padding: '10px', cursor: 'pointer', backgroundColor: isFormOpen ? '#ff4d4d' : '#4CAF50', color: 'white', border: 'none' }}
+                className={`btn-create-pokemon ${isFormOpen ? 'open' : 'closed'}`}
             >
                 {isFormOpen ? "Fermer le formulaire" : "+ Créer un nouveau Pokémon"}
             </button>
 
 
             {isFormOpen && (
-                <form onSubmit={handleFormSubmit} style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px', border: '1px solid #ddd', padding: '15px', borderRadius: '8px' }}>
+                <form onSubmit={handleFormSubmit} className="pokemon-form">
                     
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                        <div>
+                    <div className="form-grid">
+                        <div className="form-group">
                             <label>Nom :</label>
-                            <input type="text" name="name" value={formData.name} onChange={handleFormChange} required placeholder="Ex: Quentin" style={{ width: '100%' }} />
+                            <input type="text" name="name" value={formData.name} onChange={handleFormChange} required placeholder="Ex: Quentin" />
                         </div>
-                        <div>
+                        <div className="form-group">
                             <label>Type (séparé par virgule) :</label>
-                            <input type="text" name="type" value={formData.type} onChange={handleFormChange} placeholder="Ex: tft, noob" style={{ width: '100%' }} />
+                            <input type="text" name="type" value={formData.type} onChange={handleFormChange} placeholder="Ex: Fire, Dragon" />
                         </div>
                     </div>
 
                     <h4>Statistiques de base</h4>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px' }}>
-                        <label>HP: <input type="number" name="hp" value={formData.hp} onChange={handleFormChange} style={{ width: '60px' }} /></label>
-                        <label>Atk: <input type="number" name="attack" value={formData.attack} onChange={handleFormChange} style={{ width: '60px' }} /></label>
-                        <label>Def: <input type="number" name="defense" value={formData.defense} onChange={handleFormChange} style={{ width: '60px' }} /></label>
-                        <label>Sp.Atk: <input type="number" name="spAttack" value={formData.spAttack} onChange={handleFormChange} style={{ width: '60px' }} /></label>
-                        <label>Sp.Def: <input type="number" name="spDef" value={formData.spDef} onChange={handleFormChange} style={{ width: '60px' }} /></label>
-                        <label>Vit: <input type="number" name="speed" value={formData.speed} onChange={handleFormChange} style={{ width: '60px' }} /></label>
+                    <div className="stats-grid">
+                        <label>HP: <input type="number" name="hp" value={formData.hp} onChange={handleFormChange} /></label>
+                        <label>Atk: <input type="number" name="attack" value={formData.attack} onChange={handleFormChange} /></label>
+                        <label>Def: <input type="number" name="defense" value={formData.defense} onChange={handleFormChange} /></label>
+                        <label>Sp.Atk: <input type="number" name="spAttack" value={formData.spAttack} onChange={handleFormChange} /></label>
+                        <label>Sp.Def: <input type="number" name="spDef" value={formData.spDef} onChange={handleFormChange} /></label>
+                        <label>Vit: <input type="number" name="speed" value={formData.speed} onChange={handleFormChange} /></label>
                     </div>
 
-                    <button type="submit" style={{ marginTop: '10px', padding: '10px', backgroundColor: '#008CBA', color: 'white', border: 'none' }}>
+                    <button type="submit" className="btn-submit">
                         Valider la création
                     </button>
                 </form>
             )}
 
             {loading ? (
-                <p>Chargement des données...</p>
+                <div className="loading">
+                    <div className="loading-spinner"></div>
+                    <p>Chargement des Pokémon...</p>
+                </div>
             ) : (
                 <ul className="poke-list">
                     {pokemons.map((pokemon, index) => (

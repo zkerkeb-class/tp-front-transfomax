@@ -1,71 +1,151 @@
-.poke-card{
-    background-image: var(--bg-image);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    border-radius: 4px;
-    display:flex;
-    flex-direction: column;
-    width: 244px;
-    min-height: 341px;
-    cursor: pointer;
+/* ===== POKECARD ===== */
+.poke-card {
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  min-height: 400px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  position: relative;
 }
 
-.poke-title{
-    color: white;
-    text-transform: capitalize;
-    font-size: 12px;
+.poke-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
 }
 
-.poke-card-header{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 8px;
-    padding-right: 40px;
-    width: fit-content;
-    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 100%, 0 100%);
-    background-color: #6A3B7A;
+.poke-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-lg);
 }
 
-
-.poke-image{
-    width: 100px;
-    height: 100px;
+/* ===== HEADER DE LA CARTE ===== */
+.poke-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--spacing-md) var(--spacing-xl) var(--spacing-md) var(--spacing-md);
+  width: fit-content;
+  min-width: 60%;
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 100%, 0 100%);
+  background-color: #6A3B7A;
+  position: relative;
+  z-index: 2;
 }
 
-.poke-image-background{
-    background-color: blanchedalmond;
-    margin:8px;
+.poke-title {
+  color: var(--text-primary);
+  text-transform: capitalize;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.poke-type-font{
-    font-size: 10px;
+/* ===== ZONE IMAGE ===== */
+.poke-image-background {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
 }
 
-.poke-stat-row{
-    display: flex;
-    justify-content: space-between;
-    padding: 0px 8px;
+.poke-image {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  transition: transform var(--transition-normal);
 }
 
-/* Couleurs par type de Pokémon */
-.poke-card-header.poke-type-normal { background-color: #A8A878; }
-.poke-card-header.poke-type-fire { background-color: #F08030; }
-.poke-card-header.poke-type-water { background-color: #6890F0; }
-.poke-card-header.poke-type-grass { background-color: #78C850; }
-.poke-card-header.poke-type-electric { background-color: #F8D030; }
-.poke-card-header.poke-type-ice { background-color: #98D8D8; }
-.poke-card-header.poke-type-fighting { background-color: #C03028; }
-.poke-card-header.poke-type-poison { background-color: #A040A0; }
-.poke-card-header.poke-type-ground { background-color: #E0C068; }
-.poke-card-header.poke-type-flying { background-color: #A890F0; }
-.poke-card-header.poke-type-psychic { background-color: #F85888; }
-.poke-card-header.poke-type-bug { background-color: #A8B820; }
-.poke-card-header.poke-type-rock { background-color: #B8A038; }
-.poke-card-header.poke-type-ghost { background-color: #705898; }
-.poke-card-header.poke-type-dragon { background-color: #7038F8; }
-.poke-card-header.poke-type-dark { background-color: #705848; }
-.poke-card-header.poke-type-steel { background-color: #B8B8D0; }
-.poke-card-header.poke-type-fairy { background-color: #EE99AC; }
+.poke-card:hover .poke-image {
+  transform: scale(1.1);
+}
+
+/* ===== WRAPPER DES STATS ===== */
+.poke-stats-wrapper {
+  background: rgba(30, 33, 45, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom-left-radius: var(--border-radius-lg);
+  border-bottom-right-radius: var(--border-radius-lg);
+  padding: var(--spacing-sm) 0;
+  position: relative;
+  z-index: 2;
+}
+
+.poke-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.poke-stat-row:last-child {
+  border-bottom: none;
+}
+
+.poke-type-font {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.poke-stat-value {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* ===== COULEURS PAR TYPE DE POKÉMON ===== */
+.poke-card-header.poke-type-Normal { background: linear-gradient(135deg, #A8A878, #8a8a5c); }
+.poke-card-header.poke-type-Fire { background: linear-gradient(135deg, #F08030, #dd6610); }
+.poke-card-header.poke-type-Water { background: linear-gradient(135deg, #6890F0, #4a6fc7); }
+.poke-card-header.poke-type-Grass { background: linear-gradient(135deg, #78C850, #5ca935); }
+.poke-card-header.poke-type-Electric { background: linear-gradient(135deg, #F8D030, #c9a820); }
+.poke-card-header.poke-type-Ice { background: linear-gradient(135deg, #98D8D8, #69c6c6); }
+.poke-card-header.poke-type-Fighting { background: linear-gradient(135deg, #C03028, #9d1f18); }
+.poke-card-header.poke-type-Poison { background: linear-gradient(135deg, #A040A0, #803380); }
+.poke-card-header.poke-type-Ground { background: linear-gradient(135deg, #E0C068, #c9a64c); }
+.poke-card-header.poke-type-Flying { background: linear-gradient(135deg, #A890F0, #7a5de8); }
+.poke-card-header.poke-type-Psychic { background: linear-gradient(135deg, #F85888, #eb2c60); }
+.poke-card-header.poke-type-Bug { background: linear-gradient(135deg, #A8B820, #889610); }
+.poke-card-header.poke-type-Rock { background: linear-gradient(135deg, #B8A038, #93801d); }
+.poke-card-header.poke-type-Ghost { background: linear-gradient(135deg, #705898, #554374); }
+.poke-card-header.poke-type-Dragon { background: linear-gradient(135deg, #7038F8, #4c11d8); }
+.poke-card-header.poke-type-Dark { background: linear-gradient(135deg, #705848, #493a2e); }
+.poke-card-header.poke-type-Steel { background: linear-gradient(135deg, #B8B8D0, #9494b8); }
+.poke-card-header.poke-type-Fairy { background: linear-gradient(135deg, #EE99AC, #e66a86); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .poke-card {
+    width: 100%;
+    max-width: 320px;
+    min-height: 360px;
+  }
+  
+  .poke-image {
+    width: 120px;
+    height: 120px;
+  }
+}
