@@ -8,6 +8,7 @@ const PokeList = () => {
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [searchQuery, setSearchQuery] = useState("");
 
     // --- ÉTATS DU FORMULAIRE (Fusionnés ici) ---
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -36,8 +37,27 @@ const PokeList = () => {
     };
 
     useEffect(() => {
+        if (searchQuery.trim()) return;
         fetchPokemons(page);
-    }, [page]);
+    }, [page, searchQuery]);
+
+    useEffect(() => {
+        const query = searchQuery.trim();
+        if (!query) return;
+
+        setLoading(true);
+        fetch(`http://localhost:3000/pokemons/search?q=${encodeURIComponent(query)}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setPokemons(data.data || []);
+                setTotalPages(1);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error("Erreur:", error);
+                setLoading(false);
+            });
+    }, [searchQuery]);
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;
@@ -122,6 +142,16 @@ const PokeList = () => {
     return (
         <div className="poke-list-container">
             <h2>Pokedex</h2>
+
+            <div className="search-bar" style={{ margin: '10px 0' }}>
+                <input
+                    type="text"
+                    placeholder="Rechercher un Pokémon..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={{ padding: '8px 10px', width: '100%', maxWidth: '360px' }}
+                />
+            </div>
 
             <div className="pagination-controls">
                 <button onClick={goToFirstPage} disabled={page === 1}>
