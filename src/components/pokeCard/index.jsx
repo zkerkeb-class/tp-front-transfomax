@@ -20,14 +20,16 @@ const PokeCard = ({ pokemon }) => {
 
     return (
     <Link to={`/pokemonDetails/${encodeURIComponent(pokemon.name.french)}`}>
-        <div className="poke-card" style={{ '--bg-image': `url(${pokemon.image})` }}>
+        <div className="poke-card" style={{ '--bg-image': pokemon.isFullArt ? `url(${pokemon.image})` : undefined }}>
             
             <div className={`poke-card-header poke-type-${pokemon.type?.[0]}`}>
                 <PokeTitle name={pokemon.name.french} />
             </div>
 
             <div className="poke-image-background">
-                <PokeImage imageUrl={pokemon.image} />
+                { !pokemon.isFullArt && (
+                    <PokeImage imageUrl={pokemon.image} />
+                )}
             </div>
 
             <div className="poke-stats-wrapper">
