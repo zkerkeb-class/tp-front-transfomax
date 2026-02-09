@@ -61,8 +61,7 @@ const PokeList = () => {
                     SpecialAttack: formData.spAttack,
                     SpecialDefense: formData.spDef,
                     Speed: formData.speed
-                },
-                image: "unknown.png"
+                }
             };
 
             const response = await fetch('http://localhost:3000/pokemons/update', {
@@ -88,6 +87,18 @@ const PokeList = () => {
         }
     };
 
+    const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+        if (file) {
+            setFormData({
+                ...formData,
+                image: file,
+                imagePreview: URL.createObjectURL(file)
+            });
+        }
+    };
+
     // --- LOGIQUE PAGINATION ---
     const handlePrev = () => {
         if (page > 1) setPage(page - 1);
@@ -97,12 +108,24 @@ const PokeList = () => {
         if (page < totalPages) setPage(page + 1);
     };
 
+    const goToLastPage = () => {
+        setPage(totalPages);
+    };
+
+    const goToFirstPage = () => {
+        setPage(1);
+    };
+
 
     return (
         <div className="poke-list-container">
             <h2>Pokedex</h2>
 
             <div className="pagination-controls">
+                <button onClick={goToFirstPage} disabled={page === 1}>
+                    Première Page
+                </button>
+
                 <button onClick={handlePrev} disabled={page === 1}>
                     Précédent
                 </button>
@@ -111,6 +134,10 @@ const PokeList = () => {
 
                 <button onClick={handleNext} disabled={page >= totalPages}>
                     Suivant
+                </button>
+
+                <button onClick={goToLastPage} disabled={page >= totalPages}>
+                    Dernière Page
                 </button>
             </div>
 
@@ -132,8 +159,25 @@ const PokeList = () => {
                         </div>
                         <div className="form-group">
                             <label>Type (séparé par virgule) :</label>
-                            <input type="text" name="type" value={formData.type} onChange={handleFormChange} placeholder="Ex: Fire, Dragon" />
+                            <input type="text" name="type" value={formData.type} onChange={handleFormChange} placeholder="Ex: Tft, Noob" />
                         </div>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Image (Fichier) :</label>
+                        <input 
+                            type="file" 
+                            name="image" 
+                            accept="image/png, image/jpeg"
+                            onChange={handleFileChange}
+                        />
+                        {formData.imagePreview && (
+                            <img 
+                                src={formData.imagePreview} 
+                                alt="Prévisualisation" 
+                                style={{ marginTop: '10px', height: '100px', objectFit: 'contain' }} 
+                            />
+                        )}
                     </div>
 
                     <h4>Statistiques de base</h4>
