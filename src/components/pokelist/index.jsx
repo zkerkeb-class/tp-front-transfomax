@@ -51,23 +51,25 @@ const PokeList = () => {
         e.preventDefault();
 
         try {
-            const payload = {
-                name: formData.name,
-                type: formData.type.split(',').map(t => t.trim()),
-                base: {
-                    HP: formData.hp,
-                    Attack: formData.attack,
-                    Defense: formData.defense,
-                    SpecialAttack: formData.spAttack,
-                    SpecialDefense: formData.spDef,
-                    Speed: formData.speed
-                }
-            };
+            const fd = new FormData();
+            fd.append('name', formData.name);
+            fd.append('type', JSON.stringify(formData.type.split(',').map(t => t.trim())));
+            fd.append('base', JSON.stringify({
+                HP: formData.hp,
+                Attack: formData.attack,
+                Defense: formData.defense,
+                SpecialAttack: formData.spAttack,
+                SpecialDefense: formData.spDef,
+                Speed: formData.speed
+            }));
+
+            if (formData.image instanceof File) {
+                fd.append('image', formData.image);
+            }
 
             const response = await fetch('http://localhost:3000/pokemons/update', {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: fd
             });
 
             const data = await response.json();
