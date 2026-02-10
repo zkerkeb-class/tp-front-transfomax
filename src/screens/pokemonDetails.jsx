@@ -127,6 +127,15 @@ const PokemonDetails = () => {
                 });
         }, []);
 
+    const statsConfig = [
+        { key: 'HP', label: 'HP' },
+        { key: 'Attack', label: 'Attack' },
+        { key: 'Defense', label: 'Defense' },
+        { key: 'SpecialAttack', label: 'Sp. Atk' },
+        { key: 'SpecialDefense', label: 'Sp. Def' },
+        { key: 'Speed', label: 'Speed' }
+    ];
+
 
     if (loading) {
         return (
@@ -177,13 +186,13 @@ const PokemonDetails = () => {
                 
                 {isEditing ? (
                     <div className="edit-form">
-                        {['HP', 'Attack', 'Defense', 'SpecialAttack', 'SpecialDefense', 'Speed'].map(statName => (
-                            <div key={statName} className="edit-form-group">
-                                <label>{statName}</label>
+                        {statsConfig.map(({ key, label }) => (
+                            <div key={key} className="edit-form-group">
+                                <label>{label}</label>
                                 <input 
                                     type="number"
-                                    name={statName}
-                                    value={formData.base?.[statName] || 0}
+                                    name={key}
+                                    value={formData.base?.[key] || 0}
                                     onChange={handleStatChange}
                                 />
                             </div>
@@ -191,30 +200,25 @@ const PokemonDetails = () => {
                     </div>
                 ) : (
                     <div className="stats-list">
-                        <div className="stat-item">
-                            <span className="stat-name">HP</span>
-                            <span className="stat-value">{pokemon.base?.HP}</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-name">Attack</span>
-                            <span className="stat-value">{pokemon.base?.Attack}</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-name">Defense</span>
-                            <span className="stat-value">{pokemon.base?.Defense}</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-name">Sp. Atk</span>
-                            <span className="stat-value">{pokemon.base?.SpecialAttack}</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-name">Sp. Def</span>
-                            <span className="stat-value">{pokemon.base?.SpecialDefense}</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-name">Speed</span>
-                            <span className="stat-value">{pokemon.base?.Speed}</span>
-                        </div>
+                        {statsConfig.map(({ key, label }) => {
+                            const value = pokemon.base?.[key] ?? 0;
+                            const percent = Math.min(100, Math.round((value / 255) * 100));
+                            return (
+                                <div key={key} className="stat-item">
+                                    <div className="stat-item-header">
+                                        <span className="stat-name">{label}</span>
+                                        <span className="stat-value">{value}</span>
+                                    </div>
+                                    <div className="stat-bar">
+                                        <span
+                                            className="stat-bar-fill"
+                                            style={{ width: `${percent}%` }}
+                                            aria-label={`${label} ${value}`}
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 )}
             </div>

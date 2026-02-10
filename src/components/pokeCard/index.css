@@ -78,19 +78,19 @@
 }
 
 .poke-stats-wrapper {
-  padding: var(--spacing-xs) 0;
+  padding: var(--spacing-xs) 8px;
   background: rgba(30, 33, 45, 0.5);
   position: absolute;
   bottom: 15%;
   right: 8.5px;
   left: 8.5px;
   z-index: 2;
-  font-size: 3px;
   line-height: 0.1;
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
   font-size: 5px;
+  justify-content: flex-start;
 }
 
 .poke-stat-row {
