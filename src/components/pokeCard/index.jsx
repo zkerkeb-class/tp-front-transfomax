@@ -20,18 +20,37 @@ const PokeCard = ({ pokemon }) => {
 
     return (
     <Link to={`/pokemonDetails/${encodeURIComponent(pokemon.name.french)}`}>
-        <div className="poke-card" style={{ '--bg-image': pokemon.isFullArt ? `url(${pokemon.image})` : undefined }}>
+        {/* <div className="poke-card" style={{ '--bg-image': pokemon.isFullArt ? `url(${pokemon.image})` : undefined }}> */}
+        <div className="poke-card" style={{ '--bg-image': `url(${pokemon.image})`}}>
             
 
-            <div className="poke-image-background">
+            {/* <div className="poke-image-background">
                 { !pokemon.isFullArt && (
                     <PokeImage imageUrl={pokemon.image} />
                 )}
-            </div>
+            </div> */}
 
             <div className="poke-stats-wrapper">
                 {statsArray.map((stat) => {
-                    const statName = stat[0];
+                    let statName = stat[0];
+
+                    console.log("Stat avant transformation:", statName);
+                    if (statName === "Attack") {
+                        statName = "ATK";
+                    }
+                    if (statName === "Defense") {
+                        statName = "DEF";
+                    }
+                    if (statName === "SpecialAttack") {
+                        statName = "ATK.SP";
+                    }
+                    if (statName === "SpecialDefense") {
+                        statName = "DEF.SP";
+                    }
+                    if (statName === "Speed") {
+                        statName = "SPD";
+                    }   
+
                     const statValue = stat[1];
 
                     return (
