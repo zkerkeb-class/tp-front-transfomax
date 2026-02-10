@@ -78,21 +78,20 @@
 }
 
 .poke-stats-wrapper {
-  background: rgba(30, 33, 45, 0.95);
-  backdrop-filter: blur(8px);
-  border-bottom-left-radius: var(--border-radius-lg);
-  border-bottom-right-radius: var(--border-radius-lg);
-  padding: var(--spacing-sm) 0;
-  position: relative;
+  padding: var(--spacing-xs) 0;
+  background: rgba(30, 33, 45, 0.5);
+  position: absolute;
+  top: 70%;
+  left: 5%;
   z-index: 2;
+  font-size: var(--font-size-xs);
+  line-height: 1.2;
 }
 
 .poke-stat-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-xs) var(--spacing-md);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1px;
 }
 
 .poke-stat-row:last-child {

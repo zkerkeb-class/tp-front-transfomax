@@ -21,6 +21,39 @@
   color: var(--color-warning);
 }
 
+.pokemon-name-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.editing-label {
+  color: var(--color-warning);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.pokemon-name-input {
+  width: min(420px, 90%);
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-primary);
+  border: 1px solid var(--bg-hover);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.pokemon-name-input:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.2);
+}
+
 /* ===== IMAGE DU POKÉMON ===== */
 .pokemon-image-container {
   display: flex;

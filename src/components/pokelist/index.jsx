@@ -141,7 +141,7 @@ const PokeList = () => {
 
     return (
         <div className="poke-list-container">
-            <h2>Pokedex</h2>
+            <h2>Full-art Dex</h2>
 
             <div className="search-bar" style={{ margin: '10px 0' }}>
                 <input

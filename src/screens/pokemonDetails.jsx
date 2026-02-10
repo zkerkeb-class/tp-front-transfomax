@@ -48,6 +48,14 @@ const PokemonDetails = () => {
         }
         };
 
+    const handleNameChange = (e) => {
+        const { value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            name: value
+        }));
+    };
+
     const handleStatChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -61,9 +69,11 @@ const PokemonDetails = () => {
 
     const updatePokemon = async () => {
         try {
-            
+            const trimmedName = (formData.name || '').trim();
             const payload = {
-                name: pokemon.name.french, 
+                name: pokemon.name.french,
+                originalName: pokemon.name.french,
+                newName: trimmedName || pokemon.name.french,
                 base: formData.base,
                 type: pokemon.type, 
                 image: pokemon.image
@@ -80,6 +90,13 @@ const PokemonDetails = () => {
             if (response.ok) {
                 console.log("Update réussi :", data);
                 setPokemon(data);
+                setFormData({
+                    name: data.name?.french || trimmedName || pokemon.name.french,
+                    base: data.base || formData.base
+                });
+                if (data.name?.french && data.name.french !== pokeName) {
+                    navigate(`/pokemonDetails/${encodeURIComponent(data.name.french)}`, { replace: true });
+                }
                 setIsEditing(false);
             } else {
                 alert("Erreur update : " + data.error);
@@ -98,6 +115,10 @@ const PokemonDetails = () => {
                 .then((data) => {
                     console.log("Données reçues:", data);
                     setPokemon(data);
+                    setFormData({
+                        name: data?.name?.french || '',
+                        base: data?.base || {}
+                    });
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -119,9 +140,20 @@ const PokemonDetails = () => {
     return (
         <div className="pokemon-details-page">
             <div className={`pokemon-details-header ${isEditing ? 'editing' : ''}`}>
-                <h1>
-                    {isEditing ? "Mode Édition" : pokemon.name.french}
-                </h1>
+                {isEditing ? (
+                    <div className="pokemon-name-edit">
+                        <span className="editing-label">Mode Édition</span>
+                        <input
+                            className="pokemon-name-input"
+                            type="text"
+                            value={formData.name || ''}
+                            onChange={handleNameChange}
+                            placeholder="Nom du Pokémon"
+                        />
+                    </div>
+                ) : (
+                    <h1>{pokemon.name.french}</h1>
+                )}
                 
                 {pokemon.type && (
                     <div className="pokemon-types">
@@ -203,10 +235,10 @@ const PokemonDetails = () => {
                             ← Retour à la liste
                         </Link>
                         <button onClick={() => {
-                            setFormData({ base: { ...pokemon.base } });
+                            setFormData({ name: pokemon.name.french, base: { ...pokemon.base } });
                             setIsEditing(true);
                         }} className="btn-edit">
-                            Modifier les stats
+                            Modifier
                         </button>
                         <button 
                             onClick={() => deletePokemon(pokemon.name.french)}
