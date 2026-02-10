@@ -1,11 +1,214 @@
-.poke-list-container{
-    display: flex;
-    flex-direction: column;
-
+/* ===== POKELIST CONTAINER ===== */
+.poke-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
 }
 
-.poke-list{
-    display: flex;
+.poke-list-container h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--spacing-md);
+}
+
+/* ===== GRILLE DES POKÉMON ===== */
+.poke-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  justify-items: center;
+  padding: var(--spacing-md) 0;
+}
+
+/* ===== PAGINATION ===== */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.pagination-controls button {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: var(--text-primary);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.pagination-controls button:disabled {
+  background: var(--bg-hover);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination-controls span {
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-sm);
+}
+
+/* ===== BOUTON CRÉER POKÉMON ===== */
+.btn-create-pokemon {
+  width: 100%;
+  padding: var(--spacing-md);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.btn-create-pokemon.open {
+  background: linear-gradient(135deg, var(--color-danger), #dc2626);
+  color: var(--text-primary);
+}
+
+.btn-create-pokemon.closed {
+  background: linear-gradient(135deg, var(--color-success), #22c55e);
+  color: #000;
+}
+
+.btn-create-pokemon:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== FORMULAIRE DE CRÉATION ===== */
+.pokemon-form {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-md);
+  border: 1px solid var(--bg-hover);
+  box-shadow: var(--shadow-md);
+  animation: fadeIn 0.3s ease;
+}
+
+.pokemon-form h4 {
+  color: var(--color-secondary);
+  margin: var(--spacing-lg) 0 var(--spacing-md);
+  font-size: var(--font-size-lg);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.form-group input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-primary);
+  border: 1px solid var(--bg-hover);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.2);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+}
+
+.stats-grid label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.stats-grid input {
+  width: 70px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  text-align: center;
+}
+
+.btn-submit {
+  margin-top: var(--spacing-lg);
+  width: 100%;
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(88, 101, 242, 0.4);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .poke-list {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .pagination-controls {
     flex-wrap: wrap;
-    gap:8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .poke-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
 }

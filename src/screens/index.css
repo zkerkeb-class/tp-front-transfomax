@@ -1,0 +1,350 @@
+/* ===== PAGE DÉTAILS POKÉMON ===== */
+.pokemon-details-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  animation: fadeIn 0.3s ease;
+}
+
+.pokemon-details-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.pokemon-details-header h1 {
+  font-size: 2.5rem;
+  text-transform: capitalize;
+  margin-bottom: var(--spacing-sm);
+}
+
+.pokemon-details-header.editing h1 {
+  color: var(--color-warning);
+}
+
+.pokemon-name-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.editing-label {
+  color: var(--color-warning);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.pokemon-name-input {
+  width: min(420px, 90%);
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-primary);
+  border: 1px solid var(--bg-hover);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.pokemon-name-input:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.2);
+}
+
+/* ===== IMAGE DU POKÉMON ===== */
+.pokemon-image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.pokemon-details-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
+  transition: transform var(--transition-normal);
+}
+
+.pokemon-details-image:hover {
+  transform: scale(1.1);
+}
+
+/* ===== SECTION STATS ===== */
+.pokemon-stats-section {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  border: 1px solid var(--bg-hover);
+}
+
+.pokemon-stats-section h2 {
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.stats-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--bg-hover);
+}
+
+.stat-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-name {
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+}
+
+.stat-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-hover);
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.stat-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+  transition: width var(--transition-normal);
+}
+
+/* ===== FORMULAIRE D'ÉDITION ===== */
+.edit-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.edit-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.edit-form-group label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+}
+
+.edit-form-group input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-primary);
+  border: 1px solid var(--bg-hover);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-fast);
+}
+
+.edit-form-group input:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.2);
+}
+
+/* ===== ACTIONS ===== */
+.pokemon-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid var(--bg-hover);
+  flex-wrap: wrap;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--bg-hover);
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.btn-back:hover {
+  background: var(--bg-hover);
+  color: var(--color-secondary);
+}
+
+.btn-edit {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-edit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(88, 101, 242, 0.4);
+}
+
+.btn-save {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-success), #22c55e);
+  color: #000;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(74, 222, 128, 0.4);
+}
+
+.btn-cancel {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--bg-hover);
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-cancel:hover {
+  background: var(--bg-hover);
+}
+
+.btn-delete {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-danger), #dc2626);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+}
+
+/* ===== ÉTAT DE CHARGEMENT ===== */
+.loading-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: var(--spacing-md);
+}
+
+.loading-details p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+}
+
+/* ===== TYPES DU POKÉMON ===== */
+.pokemon-types {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.type-badge {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--border-radius-xl);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: capitalize;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.type-badge.Normal { background: #A8A878; }
+.type-badge.Fire { background: #F08030; }
+.type-badge.Water { background: #6890F0; }
+.type-badge.Grass { background: #78C850; }
+.type-badge.Electric { background: #F8D030; color: #333; }
+.type-badge.Ice { background: #98D8D8; color: #333; }
+.type-badge.Fighting { background: #C03028; }
+.type-badge.Poison { background: #A040A0; }
+.type-badge.Ground { background: #E0C068; color: #333; }
+.type-badge.Flying { background: #A890F0; }
+.type-badge.Psychic { background: #F85888; }
+.type-badge.Bug { background: #A8B820; }
+.type-badge.Rock { background: #B8A038; }
+.type-badge.Ghost { background: #705898; }
+.type-badge.Dragon { background: #7038F8; }
+.type-badge.Dark { background: #705848; }
+.type-badge.Steel { background: #B8B8D0; color: #333; }
+.type-badge.Fairy { background: #EE99AC; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .pokemon-details-page {
+    padding: var(--spacing-md);
+  }
+  
+  .pokemon-details-header h1 {
+    font-size: 2rem;
+  }
+  
+  .pokemon-details-image {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .pokemon-actions {
+    flex-direction: column;
+  }
+  
+  .pokemon-actions > * {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
